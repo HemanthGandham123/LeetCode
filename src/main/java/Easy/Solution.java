@@ -104,6 +104,20 @@ public class Solution {
 		return res;
 	}
 
+	public int addDigits(int num) {
+		return (num - 1) % 9 + 1;
+	}
+
+	public int countOperations(int num1, int num2) {
+		if (num1 == 0 || num2 == 0) {
+			return 0;
+		}
+		if (num1 >= num2) {
+			return 1 + countOperations(num1 - num2, num2);
+		}
+		return 1 + countOperations(num1, num2 - num1);
+	}
+
 	public int maxProduct(int[] nums) {
 		int max = Integer.MIN_VALUE, secMax = Integer.MIN_VALUE;
 		for (int i = 0; i < nums.length; i++) {
