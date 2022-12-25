@@ -1,15 +1,7 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Solution {
@@ -489,13 +481,6 @@ public class Solution {
 		return treeNumSum;
 	}
 
-//	private int[] swapArray(int[] arr, int i, int j) {
-//		int tmp = arr[i];
-//		arr[i] = arr[j];
-//		arr[j] = tmp;
-//		return arr;
-//	}
-
 	public String maximumNumber(String num, int[] change) {
 		char[] arr = num.toCharArray();
 		boolean changed = false;
@@ -523,8 +508,6 @@ public class Solution {
 
 		if (k == 0)
 			return dupSet.size();
-
-//		numSet.addAll(Arrays.stream(nums).boxed().collect(Collectors.toList()));
 
 		List<Integer> numList = numSet.stream().sorted().collect(Collectors.toList());
 		for (int i = 0; i < numList.size() - 1; i++) {
