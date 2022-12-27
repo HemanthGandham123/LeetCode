@@ -118,6 +118,25 @@ public class Solution {
 		return 1 + countOperations(num1, num2 - num1);
 	}
 
+	private String capitalizeWord(String str) {
+		String result = str.toLowerCase();
+		return new Character((char) (result.toCharArray()[0] - 'a' + 'A')) + result.substring(1);
+	}
+
+	public String capitalizeTitle(String title) {
+		String result = "";
+		String[] words = title.split("\\s+");
+		for (String word : words) {
+			if (word.length() < 3) {
+				result = result + word.toLowerCase();
+			} else {
+				result = result + capitalizeWord(word);
+			}
+			result = result + " ";
+		}
+		return result.trim();
+	}
+
 	public int maxProduct(int[] nums) {
 		int max = Integer.MIN_VALUE, secMax = Integer.MIN_VALUE;
 		for (int i = 0; i < nums.length; i++) {

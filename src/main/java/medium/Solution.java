@@ -583,6 +583,32 @@ public class Solution {
 		return dp[n];
 	}
 
+	public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+		int maximumBags = 0, n = rocks.length;
+		int[] diff = new int[n];
+		for (int i = 0; i < n; i++) {
+			if (rocks[i] >= capacity[i]) {
+				diff[i] = Integer.MIN_VALUE;
+			} else {
+				diff[i] = capacity[i] - rocks[i];
+			}
+		}
+		Arrays.sort(diff);
+		for (int i = 0; i < n; i++) {
+			if (diff[i] == Integer.MIN_VALUE) {
+				maximumBags++;
+			} else {
+				if (additionalRocks >= diff[i]) {
+					additionalRocks -= diff[i];
+					maximumBags++;
+				} else {
+					break;
+				}
+			}
+		}
+		return maximumBags;
+	}
+
 	private Map<Character, List<Character>> keyPad = new HashMap<Character, List<Character>>() {{
 		put('2', Arrays.asList('a', 'b', 'c'));
 		put('3', Arrays.asList('d', 'e', 'f'));
