@@ -71,6 +71,23 @@ public class Solution {
 		return count;
 	}
 
+	private int countVowels(String str) {
+		int count = 0;
+		for (Character ch : str.toCharArray()) {
+			if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public boolean halvesAreAlike(String s) {
+		int len = s.length();
+		String firstHalf = s.toLowerCase().substring(0, len / 2);
+		String secondHalf = s.toLowerCase().substring(len / 2);
+		return countVowels(firstHalf) == countVowels(secondHalf);
+	}
+
 	public char repeatedCharacter(String s) {
 		Set<Character> charSet = new HashSet<>();
 		for (Character ch : s.toCharArray()) {
@@ -81,6 +98,31 @@ public class Solution {
 			}
 		}
 		return ' ';
+	}
+
+	public boolean wordPattern(String pattern, String s) {
+		String[] words = s.split("\\s+");
+		if (words.length != pattern.length()) {
+			return false;
+		}
+		Map<Character, String> patternMap = new HashMap<>();
+		Set<String> patternSet = new HashSet<>();
+		for (int i = 0; i < pattern.length(); i++) {
+			Character currentChar = pattern.charAt(i);
+			String currentWord = words[i];
+			if (!patternMap.containsKey(currentChar)) {
+				if (patternSet.contains(currentWord)) {
+					return false;
+				}
+				patternSet.add(currentWord);
+				patternMap.put(currentChar, currentWord);
+			} else {
+				if (!currentWord.equals(patternMap.get(currentChar))) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public List<String> commonChars(String[] words) {
@@ -474,6 +516,25 @@ public class Solution {
 
 	public int hammingWeight(int n) {
 		return Integer.bitCount(n);
+	}
+
+	public int percentageLetter(String s, char letter) {
+		Map<Character, Integer> freqmap = freqMap(s);
+		return (int) Math.floor((freqmap.getOrDefault(letter, 0) * 100) / s.length());
+	}
+
+	public boolean canConstruct(String ransomNote, String magazine) {
+		Map<Character, Integer> ransomNoteMap = freqMap(ransomNote);
+		Map<Character, Integer> magazineMap = freqMap(magazine);
+		for (Character ch : ransomNoteMap.keySet()) {
+			if (!magazineMap.containsKey(ch)) {
+				return false;
+			}
+			if (ransomNoteMap.get(ch) > magazineMap.get(ch)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public int subtractProductAndSum(int n) {

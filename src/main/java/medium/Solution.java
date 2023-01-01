@@ -583,6 +583,23 @@ public class Solution {
 		return dp[n];
 	}
 
+	public static int minStoneSum(int[] piles, int k) {
+		PriorityQueue<Integer> maxElemQueue = new PriorityQueue<>(Collections.reverseOrder());
+		for (int i = 0; i < piles.length; i++) {
+			maxElemQueue.add(piles[i]);
+		}
+		while (k-- > 0) {
+			int tmp = maxElemQueue.poll();
+			int newElem = tmp - (int) Math.floor(tmp / 2);
+			maxElemQueue.add(newElem);
+		}
+		int minSum = 0;
+		while (!maxElemQueue.isEmpty()) {
+			minSum += maxElemQueue.poll();
+		}
+		return minSum;
+	}
+
 	public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
 		int maximumBags = 0, n = rocks.length;
 		int[] diff = new int[n];
@@ -669,5 +686,11 @@ public class Solution {
 		}
 
 		return list.get(list.size() - 1);
+	}
+
+	public static void main(String[] args) {
+		int[] piles = { 5, 4, 9 };
+		int k = 2;
+		System.out.println(minStoneSum(piles,k));
 	}
 }
