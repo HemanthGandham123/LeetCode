@@ -506,10 +506,7 @@ public class Solution {
 	private Map<Character, Integer> freqMap(String s) {
 		Map<Character, Integer> mp1 = new HashMap<>();
 		for (Character ch : s.toCharArray()) {
-			if (mp1.get(ch) == null)
-				mp1.put(ch, 1);
-			else
-				mp1.put(ch, mp1.get(ch) + 1);
+			mp1.merge(ch, 1, Integer::sum);
 		}
 		return mp1;
 	}
@@ -535,6 +532,23 @@ public class Solution {
 			}
 		}
 		return true;
+	}
+
+	public boolean detectCapitalUse(String word) {
+		boolean isLowerCaseFound = false;
+		int capsCount = 0;
+		for (Character ch : word.toCharArray()) {
+			int tmp = ch - 'a';
+			if (tmp >= 0 && tmp < 26) {
+				isLowerCaseFound = true;
+			} else {
+				capsCount++;
+				if (isLowerCaseFound) {
+					return false;
+				}
+			}
+		}
+		return !isLowerCaseFound || capsCount <= 1;
 	}
 
 	public int subtractProductAndSum(int n) {
