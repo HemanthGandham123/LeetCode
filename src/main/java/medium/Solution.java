@@ -244,10 +244,7 @@ public class Solution {
 	public String frequencySort(String s) {
 		Map<Character, Integer> mp = new HashMap<>();
 		for (Character c : s.toCharArray()) {
-			if (mp.get(c) == null)
-				mp.put(c, 1);
-			else
-				mp.put(c, mp.get(c) + 1);
+			mp.merge(c, 1, Integer::sum);
 		}
 
 		StringBuilder result = new StringBuilder();
@@ -686,6 +683,22 @@ public class Solution {
 		}
 
 		return list.get(list.size() - 1);
+	}
+
+	public int minimumRounds(int[] tasks) {
+		Map<Integer, Integer> taskCountMap = new HashMap<>();
+		for (int taskID : tasks) {
+			taskCountMap.merge(taskID, 1, Integer::sum);
+		}
+		int sum = 0;
+		for (Integer taskID : taskCountMap.keySet()) {
+			int taskCount = taskCountMap.get(taskID);
+			if (taskCount == 1) {
+				return -1;
+			}
+			sum += (taskCount % 3 == 0) ? taskCount / 3 : (taskCount / 3) + 1;
+		}
+		return sum;
 	}
 
 	public static void main(String[] args) {

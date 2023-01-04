@@ -534,6 +534,21 @@ public class Solution {
 		return true;
 	}
 
+	public int minDeletionSize(String[] strs) {
+		int len = strs.length;
+		int charCount = strs[0].length();
+		int deletions = 0;
+		for (int i = 0; i < charCount; i++) {
+			for (int j = 1; j < len; j++) {
+				if (strs[j].charAt(i) < strs[j - 1].charAt(i)) {
+					deletions++;
+					break;
+				}
+			}
+		}
+		return deletions;
+	}
+
 	public boolean detectCapitalUse(String word) {
 		boolean isLowerCaseFound = false;
 		int capsCount = 0;
