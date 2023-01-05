@@ -701,6 +701,46 @@ public class Solution {
 		return sum;
 	}
 
+	public int findMinArrowShots(int[][] points) {
+		int n = points.length;
+		Interval[] intervals = new Interval[n];
+		for (int i = 0; i < n; i++) {
+			Interval interval = new Interval(points[i][0], points[i][1]);
+			intervals[i] = interval;
+		}
+		Arrays.sort(intervals, new Comparator<Interval>() {
+			@Override
+			public int compare(Interval i1, Interval i2) {
+				if (i1.start == i2.start) {
+					return Integer.compare(i1.end, i2.end);
+				}
+				return Integer.compare(i1.start, i2.start);
+			}
+		});
+
+		int end = intervals[0].end, minArrowShots = 1;
+		for (int i = 1; i < n; i++) {
+			if (intervals[i].start > end) {
+				end = intervals[i].end;
+				minArrowShots++;
+			} else {
+				end = Math.min(end, intervals[i].end);
+			}
+		}
+		return minArrowShots;
+	}
+
+
+	class Interval {
+		int start;
+		int end;
+
+		public Interval(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+	}
+
 	public static void main(String[] args) {
 		int[] piles = { 5, 4, 9 };
 		int k = 2;
