@@ -741,6 +741,20 @@ public class Solution {
 		}
 	}
 
+	public int maxIceCream(int[] costs, int coins) {
+		Arrays.sort(costs);
+		int maxIceCreams = 0;
+		for (int cost : costs) {
+			if (coins - cost >= 0) {
+				coins -= cost;
+				maxIceCreams++;
+			}
+		}
+		return maxIceCreams;
+	}
+
+
+
 	public static void main(String[] args) {
 		int[] piles = { 5, 4, 9 };
 		int k = 2;
