@@ -753,11 +753,60 @@ public class Solution {
 		return maxIceCreams;
 	}
 
+	public static String getHint(String secret, String guess) {
+		Map<Character, Integer> secretMap = new HashMap<>();
+		Map<Character, Integer> guessMap = new HashMap<>();
+		int bullsCounter = 0, commonChars = 0;
+		for (int i = 0; i < secret.length(); i++) {
+			char secretChar = secret.charAt(i);
+			char guessChar = guess.charAt(i);
+			secretMap.put(secretChar, secretMap.getOrDefault(secretChar, 0) + 1);
+			guessMap.put(guessChar, guessMap.getOrDefault(guessChar, 0) + 1);
+			if (secretChar == guessChar) {
+				bullsCounter++;
+			}
+		}
+		for (int i = 0; i < 10; i++) {
+			Character currentDigit = (char) (i + '0');
+			commonChars += Math.min(secretMap.getOrDefault(currentDigit, 0), guessMap.getOrDefault(currentDigit, 0));
+		}
+		return bullsCounter + "A" + (commonChars - bullsCounter) + "B";
+	}
+
+	public int[][] sortTheStudents(int[][] score, int k) {
+		int cols = score.length;
+		int[] kthCol = new int[cols];
+		int[] posArr = new int[cols];
+		int posArrIterator = 0;
+		for (int i = 0; i < cols; i++) {
+			kthCol[i] = score[i][k];
+		}
+		for (int i = 0; i < cols; i++) {
+			int maxi = kthCol[0], maxp = 0;
+			for (int j = 0; j < cols; j++) {
+				if (kthCol[j] > maxi) {
+					maxi = kthCol[j];
+					maxp = j;
+				}
+			}
+			posArr[posArrIterator++] = maxp;
+			kthCol[maxp] = -1;
+		}
+		int[][] newScore = new int[cols][score[0].length];
+		for (int i = 0; i < cols; i++) {
+			int currRow = posArr[i];
+			System.arraycopy(score[currRow], 0, newScore[i], 0, score[0].length);
+		}
+
+		return newScore;
+	}
 
 
 	public static void main(String[] args) {
-		int[] piles = { 5, 4, 9 };
-		int k = 2;
-		System.out.println(minStoneSum(piles,k));
+		int[][] piles ={{73553,35299,52319,75465,93775},{31916,43095,68735,8047,85671},{25535,65861,78607,987,74734},{81389,14293,89623,42708,53978}};
+//		int[][] piles = {{10,6,9,1},{7,5,11,2},{4,8,3,15}};
+		int k = 4;
+
+		System.out.println(sortTheStudents(piles,k));
 	}
 }

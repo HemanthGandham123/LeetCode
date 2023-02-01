@@ -125,6 +125,21 @@ public class Solution {
 		return true;
 	}
 
+	public int tribonacci(int n) {
+		if (n == 0)
+			return 0;
+		if (n == 1 || n == 2)
+			return 1;
+		int tp[] = new int[n + 1];
+		tp[0] = 0;
+		tp[1] = 1;
+		tp[2] = 1;
+		for (int i = 3; i <= n; i++) {
+			tp[i] = tp[i - 1] + tp[i - 2] + tp[i - 3];
+		}
+		return tp[n];
+	}
+
 	public List<String> commonChars(String[] words) {
 		List<Map<Character, Integer>> mapList = new ArrayList<>();
 		for (String word : words) {
@@ -163,6 +178,22 @@ public class Solution {
 	private String capitalizeWord(String str) {
 		String result = str.toLowerCase();
 		return new Character((char) (result.toCharArray()[0] - 'a' + 'A')) + result.substring(1);
+	}
+
+	private int gcd(int p, int q) {
+		if (q == 0) {
+			return p;
+		}
+		return gcd(q, p % q);
+	}
+
+	public String gcdOfStrings(String str1, String str2) {
+		int len1 = str1.length(), len2 = str2.length();
+		if (!(str1 + str2).equals(str2 + str1)) {
+			return "";
+		}
+		int len = gcd(str1.length(), str2.length());
+		return str1.substring(0, len);
 	}
 
 	public String capitalizeTitle(String title) {
